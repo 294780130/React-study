@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Component</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="app">
+			
+		</div>
+		<!-- <script src="react/build/react.js"></script> -->
+		<script src="react/build/react-with-addons.js"></script>
+		<script src="react/build/react-dom.js"></script>
+		<script>
+			// 组件propType属性完成验证
+			var logMixin = {
+				_log:function(methodName,args){
+					console.log(this.name+"::"+methodName,args);
+				}, 
+				componentWillUpdate:function(){
+					this._log('ComponentWillUpdate',arguments)
+				},
+				componentDidUpdate:function(){
+					this._log('ComponentDidUpdate',arguments)
+				},
+				componentWillMount:function(){
+					this._log('ComponentWillMount',arguments)
+				},
+				componentDidMount:function(){
+					this._log('ComponentDidMount',arguments)
+				},
+				componentWillUnmount:function(){
+					this._log('ComponentWillUnmount',arguments)
+				}
+			};
+			
+			var TextAreaCounter = React.createClass({
+				name:"TextAreaCounter",
+				// mixins:[logMixin],
+				propTypes:{
+					text:React.PropTypes.string,
+				},
+				getInitialState:function(){
+					return{
+						text:this.props.text
+					};
+				},
+				_textChange:function(ev){
+					this.setState({
+						text:ev.target.value
+					});
+				},
+				getDefaultProps:function(){
+					return{
+						text:""
+					};
+				},
+				render:function(){
+					console.log(this.name+'::render()');
+					var counter = null;
+					if(this.state.text.length > 0){
+						counter = React.DOM.h3(null,
+							React.createElement(Counter,{
+								count:this.state.text.length
+							})
+						);
+					}
+					return React.DOM.div(null,
+						React.DOM.textarea({
+							value:this.state.text,
+							onChange:this._textChange
+						}),
+						counter
+					);
+				}
+			});
+			var Counter = React.createClass({
+				name:"Counter",
+				mixins:[React.addons.PureRenderMixin],
+				propTypes:{
+					count:React.PropTypes.number.isRequired,
+				},
+				// shouldComponentUpdate(nextProps,nextState){
+				// 	return nextProps.count != this.props.count;
+				// },
+				render:function(){
+					console.log(this.name+'::render()');
+					return React.DOM.span(null,this.props.count);
+				}
+			});
+			//相对上一个案例，只增加了一个myTextAreaCounter变量
+			var myTextAreaCounter = ReactDOM.render(
+				React.createElement(TextAreaCounter,{text:"Bob"}),	//不定name会报错，定义name:123 会警告，利于调试
+				document.getElementById("app")
+			);
+		</script>
+	</body>
+</html>   

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Component</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="app">
+			
+		</div>
+		<script src="react/build/react.js"></script>
+		<script src="react/build/react-dom.js"></script>
+		<script>
+			// 组件propType属性完成验证
+			var TextAreaCounter = React.createClass({
+				_log:function(methodName,args){
+					console.log(methodName,args);
+				},
+				componentWillUpdate:function(){
+					this._log('ComponentWillUpdate',arguments)
+				},
+				componentDidUpdate:function(){
+					this._log('ComponentDidUpdate',arguments)
+				},
+				componentWillMount:function(){
+					this._log('ComponentWillMount',arguments)
+				},
+				componentDidMount:function(){
+					this._log('ComponentDidMount',arguments)
+				},
+				componentWillUnmount:function(){
+					this._log('ComponentWillUnmount',arguments)
+				},
+				propTypes:{
+					text:React.PropTypes.string,
+				},
+				getInitialState:function(){
+					return{
+						text:this.props.text
+					};
+				},
+				_textChange:function(ev){
+					this.setState({
+						text:ev.target.value
+					});
+				},
+				getDefaultProps:function(){
+					return{
+						text:""
+					};
+				},
+				render:function(){
+					return React.DOM.div(null,
+						React.DOM.textarea({
+							value:this.state.text,
+							onChange:this._textChange
+						}),
+						React.DOM.h3(null,this.state.text.length)
+					);
+				}
+			});
+			//相对上一个案例，只增加了一个myTextAreaCounter变量
+			var myTextAreaCounter = ReactDOM.render(
+				React.createElement(TextAreaCounter,{text:"Bob"}),	//不定name会报错，定义name:123 会警告，利于调试
+				document.getElementById("app")
+			);
+		</script>
+	</body>
+</html>   

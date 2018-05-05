@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Component</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="app">
+			
+		</div>
+		<script src="react/build/react.js"></script>
+		<script src="react/build/react-dom.js"></script>
+		<script>
+			// 自定义组件
+			var MyComponent = React.createClass({
+				render:function(){
+					return React.DOM.span(null,"I'm so custom");
+				}
+			});
+			//工厂模式创建组件“实例”
+			var ComponentFactory = React.createFactory(MyComponent);
+			ReactDOM.render(
+				//React.createElement(MyComponent),	//创建组件实例方法1
+				ComponentFactory(),	//创建组件实例方法2
+				document.getElementById("app")
+			);
+		</script>
+	</body>
+</html>

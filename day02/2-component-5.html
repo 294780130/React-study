@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Component</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="app">
+			
+		</div>
+		<script src="react/build/react.js"></script>
+		<script src="react/build/react-dom.js"></script>
+		<script>
+			// 组件propType属性完成验证
+			var MyComponent = React.createClass({
+				propTypes:{
+					firstName:React.PropTypes.string.isRequired,
+					middleName:React.PropTypes.string,
+					familyName:React.PropTypes.string.isRequired,
+					address:React.PropTypes.string
+				},
+				getDefaultProps:function(){
+					return{
+						middleName:"?",
+						address:"unknow"
+					};
+				},
+				render:function(){
+					return React.DOM.span(null,"My firstName is "+this.props.firstName+"My middleName is "+this.props.middleName+"My familyName is "+this.props.familyName+"My address is "+this.props.address);
+				}
+			});
+			ReactDOM.render(
+				React.createElement(MyComponent,{
+						firstName:"firstName",
+						// middleName:"middleName",
+						familyName:"familyName",
+						// address:"address"
+					}),	//不定name会报错，定义name:123 会警告，利于调试
+					document.getElementById("app")
+			);
+		</script>
+	</body>
+</html>  
