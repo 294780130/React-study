@@ -1,0 +1,14 @@
+/*
+* @Author: Administrator
+* @Date:   2018-05-09 17:53:05
+* @Last Modified by:   Administrator
+* @Last Modified time: 2018-05-09 17:56:50
+*/
+.Logo{
+	background-image: url('../../images/react-logo.svg');
+	background-size: cover;
+	display: inline-block;
+	height: 50px;
+	vertical-align: middle;
+	width: 50px;
+}
